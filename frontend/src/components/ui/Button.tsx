@@ -3,11 +3,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps {
   variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   children: React.ReactNode;
+  className?: string;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  form?: string;
+  name?: string;
+  value?: string;
+  id?: string;
+  'aria-label'?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -17,7 +26,13 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   className = '',
   disabled,
-  ...props
+  type = 'button',
+  onClick,
+  form,
+  name,
+  value,
+  id,
+  'aria-label': ariaLabel,
 }) => {
   const baseStyles = 'font-medium rounded-lg transition-all duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
   
@@ -39,7 +54,13 @@ export const Button: React.FC<ButtonProps> = ({
       whileTap={{ scale: disabled || isLoading ? 1 : 0.98 }}
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
       disabled={disabled || isLoading}
-      {...props}
+      type={type}
+      onClick={onClick}
+      form={form}
+      name={name}
+      value={value}
+      id={id}
+      aria-label={ariaLabel}
     >
       {isLoading ? (
         <div className="flex items-center justify-center">
